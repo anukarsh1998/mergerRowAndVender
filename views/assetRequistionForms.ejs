@@ -243,7 +243,7 @@
     <div class="col-md-6">
       <label for="activityCode">Activity Code</label>
       <select id="activityCode" class="custom-select custom-select-sm form-control" name="activityCode">
-     <!--  <option value="">--None--</option> -->
+      <option value="">--None--</option> 
       </select> 
       </div>
   </div>
@@ -264,6 +264,7 @@
      <div class="col-md-6">
      <label for="quotations">if less than 3 quotations, specify Reason</label>
      <select id="quotations" class="custom-select custom-select-sm form-control" name="quotations" >
+         <option value="false">None</option>
          <option value="true">Yes</option>
          <option value="false">No</option>
          </select> 
@@ -272,6 +273,7 @@
      <div class="col-md-6">
      <label for="reason">reason for non-registered GST Vendor</label>
      <select id="reason" class="custom-select custom-select-sm form-control" name="reason" >
+         <option value="false">None</option>
          <option value="true">Yes</option>
          <option value="false">No</option>
          </select> 
@@ -285,6 +287,7 @@
      <label for="pricing">Pricing Terms/Cost comparison</label>
      <!-- <input type="checkbox"  id="pricing" value="" name="pricing" > -->
      <select id="pricing" class="custom-select custom-select-sm form-control" name="pricing" >
+         <option value="false">None</option>
          <option value="true">Yes</option>
          <option value="false">No</option>
          </select> 
@@ -329,7 +332,7 @@
         <div class="col-md-6">
         <label for="accApproval">Accounts Approval</label>
         <select id="accApproval" class="custom-select custom-select-sm form-control" name="accApproval" readonly="true">
-          <option value="null">None</option>  
+          <option value="">None</option>  
           <option value="Approved">Approved</option>
             <option value="Pending">Pending</option>
             <option value="Rejected">Rejected</option>
@@ -348,7 +351,7 @@
           <div class="col-md-6">
           <label for="advpay">Advance Payment Status</label>
           <select id="advpay" class="custom-select custom-select-sm form-control" name="advpay" readonly="true">
-            <option value="null">None</option>  
+            <option value="">None</option>  
             <option value="Yes"></option>
               <option value="No">No</option>
               <option value="Not Required">Not Required</option>
@@ -358,7 +361,7 @@
           <div class="col-md-6">
             <label for="paymentStatus">Final payment Status</label>
             <select id="paymentStatus" class="custom-select custom-select-sm form-control" name="paymentStatus" readonly="true">
-            <option value="null">None</option>
+            <option value="">None</option>
             <option value="Released">Released</option>
             <option value="Rejected">Not Released</option>
             </select> 
@@ -565,7 +568,7 @@
   </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="overflow-x: auto;">
   <!-- Particular Asset Details -->
   <table id="assetDetails" class="table table-hover striped">
   <!-- Inside code is handled by Jquery to add dyanamic Content -->
@@ -887,7 +890,9 @@
     assetDetailsTableRows += '<td><strong>Target Date of receiving<strong></td>';
     assetDetailsTableRows += '<td>'+ planDt+'</td>';
     assetDetailsTableRows += '<td ><strong>Activity Code<strong></td>';
+    
     assetDetailsTableRows += '<td >'+assetDetailsRecord.actname+'</td>';
+    
     assetDetailsTableRows += '</tr>'; 
     assetDetailsTableRows += '<tr>';
     assetDetailsTableRows += '<td><strong>Submitted By Heroku User<strong></td>';
@@ -1185,6 +1190,15 @@
     function(assetDetailsRecord){
     //console.log('Edit assetDetails : '+JSON.stringify(assetDetailsRecord));
     let assetRecord = assetDetailsRecord.asset[0];
+    if(assetRecord.total_amount__c==0){
+      $('#quotations').attr("disabled",true);
+      $('#reason').attr("disabled",true);
+      $('#pricing').attr("disabled",true);
+      $('#deliveryPlace').attr("disabled",true);
+      $('#deliveryTime').attr("disabled",true);
+      $('#deliveryCost').attr("disabled",true);
+
+    }
       
     //let activityCodes = assetDetailsRecord.activity[0];
     let activityCodes = [];
@@ -1232,10 +1246,10 @@
       }) -->
       */
       
-      document.forms["editAssetForm"]["assetName"].value = assetRecord.name;
- document.forms["editAssetForm"]["closureActualDate"].value = strclousreActualDate;
- document.forms["editAssetForm"]["closurePlanDate"].value =clousrePlanDate;
+ document.forms["editAssetForm"]["assetName"].value = assetRecord.name;
  document.forms["editAssetForm"]["projectName"].value = assetRecord.projname;
+//document.forms["editAssetForm"]["closureActualDate"].value = strclousreActualDate;
+ document.forms["editAssetForm"]["closurePlanDate"].value =clousrePlanDate;
  document.forms["editAssetForm"]["activityCode"].value = assetRecord.activity_code_project__c;
  document.forms["editAssetForm"]["accApproval"].value = assetRecord.accounts_approval__c; 
  document.forms["editAssetForm"]["utr"].value = assetRecord.utr_number_transaction_details__c; 
@@ -1244,19 +1258,16 @@
  document.forms["editAssetForm"]["attachment"].value = assetRecord.p_o_attachment__c; 
  document.forms["editAssetForm"]["status"].value = assetRecord.status__c; 
  document.forms["editAssetForm"]["payement"].value = assetRecord.payment_received_acknowledgement__c;
- 
  document.forms["editAssetForm"]["paymentStatus"].value = assetRecord.payment_status__c;
  document.forms["editAssetForm"]["receiverName"].value = assetRecord.receiver_name__c;
- 
  document.forms["editAssetForm"]["receivedQuantity"].value = assetRecord.received_quantity_goods__c;
- 
  document.forms["editAssetForm"]["goodsDate"].value = strReceivingGoodsDate;
- document.forms["editAssetForm"]["assetsfid"].value = assetRecord.sfid;
+ console.log('assetRecord.sfidt;'+assetRecord.sfidt);
+ document.forms["editAssetForm"]["assetsfid"].value = assetRecord.sfidt;
  document.forms["editAssetForm"]["quotations"].value = assetRecord.if_3_quotations_specify_reason__c;
  document.forms["editAssetForm"]["reason"].value = assetRecord.reason_for_non_registered_gst_vendor__c;
  document.forms["editAssetForm"]["pricing"].value = assetRecord.pricing_terms_cost_comparison__c;
  document.forms["editAssetForm"]["deliveryPlace"].value = assetRecord.delivery_terms_delivery_place__c;
- 
 if(assetRecord.delivery_terms_delivery_time__c!=null){
     document.forms["editAssetForm"]["deliveryTime"].value = assetRecord.delivery_terms_delivery_time__c.split('T')[0];
     console.log('aman');

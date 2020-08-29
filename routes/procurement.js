@@ -73,7 +73,7 @@ router.get('/assetEditDetails',verify ,async(request, response) =>{
     console.log('assetId  '+assetId);
     let objUser = request.user;
     console.log('User:' +objUser);
-    let qyr='SELECT asset.id, asset.sfid as sfid,asset.name as name ,asset.Activity_Code_Project__c, asset.GST__c,asset.Requested_Closure_Plan_Date__c,asset.Requested_Closure_Actual_Date__c,asset.Project_Department__c as pid, '+
+    let qyr='SELECT  asset.sfid as sfidt,asset.name as name ,asset.Activity_Code_Project__c, asset.GST__c,asset.Requested_Closure_Plan_Date__c,asset.Requested_Closure_Actual_Date__c,asset.Project_Department__c as pid, '+
     'asset.Manager_Approval__c,asset.Management_Approval__c,asset.Procurement_Committee_Approval__c,asset.Chairperson_Approval__c,asset.Committee_Approved_Counts__c,'+
     'asset.Comittee_Rejected_Count__c,asset.Procurement_Committee_Status__c,asset.Accounts_Approval__c,asset.UTR_Number_Transaction_details__c,asset.Advance_Payment_Status__c,asset.Payment_Status__c,asset.PO_Attachment_URL__c,asset.Procurement_Head_Approval__c,asset.Approval_Status__c,'+
     'asset.Number_Of_IT_Product__c,asset.Number_Of_Non_IT_Product__c,asset.Procurement_IT_total_amount__c,asset.Procurement_Non_IT_total_amount__c, asset.Total_amount__c,proj.name as projname,proj.sfid as profsfid,'+
@@ -469,10 +469,10 @@ router.post('/updateasset',(request,response)=>{
         closurePlanDate='1970-01-02';
     }
   
-    if(goodsDate==''){
+     if(goodsDate==''){
         console.log('dsjjd goods ');
         goodsDate='1970-01-02';
-    }
+    } 
 
     console.log('goodsDate'+goodsDate);
     let updateQuerry = 'UPDATE salesforce.Asset_Requisition_Form__c SET '+
@@ -490,8 +490,8 @@ router.post('/updateasset',(request,response)=>{
     'delivery_terms_delivery_place__c= \''+deliveryPlace+'\', '+
     'delivery_terms_delivery_time__c= \''+deliveryTime+'\', '+
     'delivery_cost_incl__c= \''+deliveryCost+'\', '+
-    'Received_Quantity_Goods__c= \''+receivedQuantity+'\', '+
-    'Date_of_Receiving_Goods__c= \''+goodsDate+'\' '+
+    'Received_Quantity_Goods__c= \''+receivedQuantity+'\' '+
+   // 'Date_of_Receiving_Goods__c= \''+goodsDate+'\' '+
     'WHERE sfid = $1';
     console.log('updateQuerry '+updateQuerry);
 
