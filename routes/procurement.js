@@ -444,7 +444,7 @@ router.post('/updateasset',(request,response)=>{
     let closurePlanDate =request.body.closurePlanDate;
     let goodsDate=request.body.goodsDate;
     console.log('body  : '+JSON.stringify(body));
-    const {assetsfid, assetName,activityCode,paymentStatus,status,payement,receiverName,receivedQuantity,quotations,reason,pricing,deliveryPlace,deliveryTime,deliveryCost,attachment} = request.body;
+    const {assetsfid, assetName,activityCode,paymentStatus,status,payement,receiverName,receivedQuantity,quotations,reason,pricing,deliveryPlace,deliveryTime,deliveryCost,attachment,totamt} = request.body;
     console.log('assetsfid    '+assetsfid);
     console.log('closurePlanDate  '+closurePlanDate);
     console.log('activityCode  '+activityCode);
@@ -462,6 +462,7 @@ router.post('/updateasset',(request,response)=>{
     console.log('deliveryTime  '+deliveryTime);
     console.log('deliveryCost  '+deliveryCost);
     console.log('attachment  '+attachment);
+    console.log('totamt    '+totamt);
     
 
     if(closurePlanDate==''){
@@ -490,10 +491,34 @@ router.post('/updateasset',(request,response)=>{
     'delivery_terms_delivery_place__c= \''+deliveryPlace+'\', '+
     'delivery_terms_delivery_time__c= \''+deliveryTime+'\', '+
     'delivery_cost_incl__c= \''+deliveryCost+'\', '+
-    'Received_Quantity_Goods__c= \''+receivedQuantity+'\' '+
-   // 'Date_of_Receiving_Goods__c= \''+goodsDate+'\' '+
+    'Received_Quantity_Goods__c= \''+receivedQuantity+'\', '+
+    'Date_of_Receiving_Goods__c= \''+goodsDate+'\' '+
     'WHERE sfid = $1';
     console.log('updateQuerry '+updateQuerry);
+
+    if(totamt<1){
+        updateQuerry = 'UPDATE salesforce.Asset_Requisition_Form__c SET '+
+    'Name = \''+assetName+'\', '+
+    'Requested_Closure_Plan_Date__c = \''+closurePlanDate+'\', '+
+    'Activity_Code_Project__c = \''+activityCode+'\', '+
+    'p_o_attachment__c = \''+attachment+'\', '+
+   // 'Payment_Status__c = \''+paymentStatus+'\', '+
+    'Status__c = \''+status+'\', '+
+    'Payment_Received_Acknowledgement__c = \''+payement+'\', '+
+    'Receiver_Name__c = \''+receiverName+'\', '+
+    'if_3_quotations_specify_reason__c= \''+quotations+'\', '+
+    'reason_for_non_registered_gst_Vendor__c= \''+reason+'\', '+
+    'pricing_terms_cost_comparison__c= \''+pricing+'\', '+
+    'delivery_terms_delivery_place__c= \''+deliveryPlace+'\', '+
+   // 'delivery_terms_delivery_time__c= \''+deliveryTime+'\', '+
+    'delivery_cost_incl__c= \''+deliveryCost+'\', '+
+    'Received_Quantity_Goods__c= \''+receivedQuantity+'\', '+
+    'Date_of_Receiving_Goods__c= \''+goodsDate+'\' '+
+    'WHERE sfid = $1';
+    console.log('updateQuerry '+updateQuerry);
+
+
+    }
 
     var payPass='';
     var attchPass='';

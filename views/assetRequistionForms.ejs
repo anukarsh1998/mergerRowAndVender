@@ -442,6 +442,7 @@
   
   <div class="col-md-6">
   <input type="hidden" class="form-control" id="assetid" value="" name="assetid" >
+  <input type="hidden" class="form-control" id="totamt" value="" name="totamt" >
   
   </div>
   </div> 
@@ -1250,15 +1251,34 @@
  document.forms["editAssetForm"]["projectName"].value = assetRecord.projname;
 //document.forms["editAssetForm"]["closureActualDate"].value = strclousreActualDate;
  document.forms["editAssetForm"]["closurePlanDate"].value =clousrePlanDate;
- document.forms["editAssetForm"]["activityCode"].value = assetRecord.activity_code_project__c;
- document.forms["editAssetForm"]["accApproval"].value = assetRecord.accounts_approval__c; 
+ if( assetRecord.activity_code_project__c!=null ){
+  document.forms["editAssetForm"]["activityCode"].value = assetRecord.activity_code_project__c;
+ }
+ 
+ if( assetRecord.accounts_approval__c!=null ){
+  document.forms["editAssetForm"]["accApproval"].value = assetRecord.accounts_approval__c; 
+ }
  document.forms["editAssetForm"]["utr"].value = assetRecord.utr_number_transaction_details__c; 
- document.forms["editAssetForm"]["advpay"].value = assetRecord.advance_payment_status__; 
+ if( assetRecord.advance_payment_status__!=null ){
+  document.forms["editAssetForm"]["advpay"].value = assetRecord.advance_payment_status__c;
+
+ } 
  document.forms["editAssetForm"]["attachurl"].value = assetRecord.po_attachment_url__c; 
- document.forms["editAssetForm"]["attachment"].value = assetRecord.p_o_attachment__c; 
- document.forms["editAssetForm"]["status"].value = assetRecord.status__c; 
- document.forms["editAssetForm"]["payement"].value = assetRecord.payment_received_acknowledgement__c;
- document.forms["editAssetForm"]["paymentStatus"].value = assetRecord.payment_status__c;
+ if( assetRecord.p_o_attachment__c!=null ){
+  document.forms["editAssetForm"]["attachment"].value = assetRecord.p_o_attachment__c; 
+ }
+ if( assetRecord.status__c!=null ){
+  document.forms["editAssetForm"]["status"].value = assetRecord.status__c;  
+ }
+ 
+ if( assetRecord.payment_received_acknowledgement__c!=null ){
+  document.forms["editAssetForm"]["payement"].value = assetRecord.payment_received_acknowledgement__c;
+}
+ 
+ if( assetRecord.payment_status__c!=null ){
+  document.forms["editAssetForm"]["paymentStatus"].value = assetRecord.payment_status__c;
+ }
+ 
  document.forms["editAssetForm"]["receiverName"].value = assetRecord.receiver_name__c;
  document.forms["editAssetForm"]["receivedQuantity"].value = assetRecord.received_quantity_goods__c;
  document.forms["editAssetForm"]["goodsDate"].value = strReceivingGoodsDate;
@@ -1276,6 +1296,7 @@ if(assetRecord.delivery_terms_delivery_time__c!=null){
  document.forms["editAssetForm"]["quotations"].value = assetRecord.if_3_quotations_specify_reason__c;
  document.forms["editAssetForm"]["reason"].value = assetRecord.reason_for_non_registered_gst_vendor__c;
  document.forms["editAssetForm"]["pricing"].value = assetRecord.pricing_terms_cost_comparison__c;
+ document.forms["editAssetForm"]["totamt"].value = assetRecord.total_amount__c;
 
  /*
   console.log('checkedchecked'+JSON.stringify($('#quotations').val));
